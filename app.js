@@ -1,45 +1,51 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+const express = require("express");
+const app = express();
+const port = 5000;
+const geoip = require('geoip-lite');
+const whois = require('whois-json');
+const dns = require('dns');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var testAPIRouter = require('./routes/testAPI');
+app.get("/WhoIs", (req, res, next) => res.send("No WhoIs data yet"))
 
-var app = express();
+app.post("/WhoIs", (req, res, next) => {
+    if(req.method == 'POST') {
+        let body = '';
+        req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+        req.on('end', () => {
+            (async function(){
+                var results = await whois(body, {follow: 3, verbose: true});
+                var whoIs_data = JSON.stringify(results);
+                res.send(whoIs_data);
+            })()
+            
+        });
+    }
+})
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.get("/GeoIP", (req, res, next) => res.send("No geographical data yet"));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/testAPI', testAPIRouter);
+app.post("/GeoIP", (req, res, next) => {
+    if(req.method == 'POST') {
+        let body = '';
+        req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        });
+        
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+        req.on('end', () => {
+            let domain = dns.lookup(body, function(err, addresses, family){
+            var geo = geoip.lookup(addresses);
+            console.log(geo);
+            res.send(geo);
+            })
+        })
+             
+        
+    }
+    
+})
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+app.listen(port, () => console.log(`example app listening on port ${port}!`));
