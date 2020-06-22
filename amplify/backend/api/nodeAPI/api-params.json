@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/ipcheckerapi",
+            "lambdaFunction": "ipcheckerapic412e988",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "nodeAPI",
+    "apiName": "nodeAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "ipcheckerapic412e988"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-ipcheckerapi-dev-34536-authRole",
+        "unAuthRoleName": "amplify-ipcheckerapi-dev-34536-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "ipcheckerapic412e988",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

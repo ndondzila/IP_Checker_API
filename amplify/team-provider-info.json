@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-ipcheckerapi-dev-34536-authRole",
+            "UnauthRoleArn": "arn:aws:iam::890038612997:role/amplify-ipcheckerapi-dev-34536-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::890038612997:role/amplify-ipcheckerapi-dev-34536-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-ipcheckerapi-dev-34536-deployment",
+            "UnauthRoleName": "amplify-ipcheckerapi-dev-34536-unauthRole",
+            "StackName": "amplify-ipcheckerapi-dev-34536",
+            "StackId": "arn:aws:cloudformation:us-east-1:890038612997:stack/amplify-ipcheckerapi-dev-34536/5d662e70-b45c-11ea-9ad5-0ed24b955b13",
+            "AmplifyAppId": "d391qkcx7d1goe"
+        }
+    }
+}
